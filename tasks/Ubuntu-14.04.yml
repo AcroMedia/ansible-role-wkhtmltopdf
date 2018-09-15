@@ -1,0 +1,22 @@
+---
+#######
+# All of this is just to support the usage of the 'get_url' module on 14.04
+#######
+- name: Install python-pip so we can install the ndg-httpsclient pip module
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - python-pip
+    - python-openssl
+    - python-pyasn1
+
+- name: Upgrade pip setuptools 
+  pip:
+    name: setuptools
+    state: latest
+
+- name: Install the ndg-httpsclient pip module so the "get_url" task (on Ubuntu 14) doesn't choke when it talks to an HTTPS site that uses SNI.
+  pip:
+    name: ndg-httpsclient
+    state: present

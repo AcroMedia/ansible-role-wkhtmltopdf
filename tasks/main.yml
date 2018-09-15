@@ -1,0 +1,31 @@
+---
+- name: Include distribution-specific variables
+  include_vars: "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
+
+- name: Include distribution-specific tasks (if they exist)
+  include_tasks: "{{ version_specific_task_file }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
+      skip: true
+  loop_control:
+    loop_var: version_specific_task_file
+
+- name: Install xfonts (a prerequisite of wkhtmltopdf)
+  apt:
+    name: xfonts-75dpi
+    state: present
+    update_cache: true
+
+- name: Download wkhtmltopdf
+  get_url:
+   # These come from vars/{version}.yml
+    url: "{{ package_source }}"
+    dest: "{{ download_dest }}"
+    checksum: "{{ package_checksum }}"
+
+- name: Install wkhtmltopdf
+  apt:
+    deb: "{{ download_dest }}"
+    state: present
+    update_cache: true
