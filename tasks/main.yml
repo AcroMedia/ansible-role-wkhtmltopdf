@@ -1,19 +1,30 @@
 ---
-- name: Include distribution-specific variables
-  include_vars: "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
+- name: Include OS-family-specific variables
+  include_vars: "{{ ansible_os_family }}.yml"
+
+- name: Include distribution-specific variables (if they exist)
+  include_vars: "{{ version_specific_vars_file }}"
+  with_first_found:
+    - files:
+        - "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
+        - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+      skip: true
+  loop_control:
+    loop_var: version_specific_vars_file
 
 - name: Include distribution-specific tasks (if they exist)
   include_tasks: "{{ version_specific_task_file }}"
   with_first_found:
     - files:
         - "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
+        - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
       skip: true
   loop_control:
     loop_var: version_specific_task_file
 
 - name: Install xfonts (a prerequisite of wkhtmltopdf)
-  apt:
-    name: xfonts-75dpi
+  package:
+    name: "{{ xfonts_package_name }}"
     state: present
     update_cache: true
 
@@ -24,8 +35,16 @@
     dest: "{{ download_dest }}"
     checksum: "{{ package_checksum }}"
 
-- name: Install wkhtmltopdf
+- name: Install wkhtmltopdf (Debian-ish)
   apt:
     deb: "{{ download_dest }}"
     state: present
     update_cache: true
+  when: ansible_os_family == 'Debian'
+
+- name: Install wkhtmltopdf (Red-hat-ish)
+  yum:
+    name: "{{ download_dest }}"
+    state: present
+    update_cache: true
+  when: ansible_os_family == 'RedHat'

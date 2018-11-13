@@ -1,0 +1,7 @@
+---
+# See https://wkhtmltopdf.org/downloads.html for checksums.
+package_source: 'https://downloads.wkhtmltopdf.org/0.12/0.12.5/wkhtmltox-0.12.5-1.centos6.x86_64.rpm'
+download_dest: "{{ lookup('env','HOME') }}/wkhtmltox-0.12.5-1.centos6.x86_64.rpm"
+package_checksum: sha256:17bff4966143d240a126b6cc414c6f79aa2106c0c97c772228e84d685221c25f
+
+xfonts_package_name: xorg-x11-fonts-75dpi

@@ -1,0 +1,16 @@
+---
+- name: Install dependencies of the ndg-httpsclient pip module
+  yum:
+    name:
+      - epel-release
+      - python-pip
+      - pyOpenSSL
+      - python-pyasn1
+      - python-setuptools
+    state: present
+    update_cache: true
+
+- name: Install the ndg-httpsclient pip module so the "get_url" task doesn't choke when it talks to an HTTPS site that uses SNI.
+  pip:
+    name: ndg-httpsclient
+    state: present
