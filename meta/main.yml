@@ -1,0 +1,15 @@
+galaxy_info:
+  author: Dale Anderson
+  description: Install wkhtmltopdf and its dependencies
+  company: Acro Media Inc.
+  license: GPLv3
+  min_ansible_version: 2.4
+  platforms:
+   - name: EL
+     versions:
+     - 6
+   - name: Ubuntu
+     versions:
+     - trusty
+  galaxy_tags: []
+dependencies: []
