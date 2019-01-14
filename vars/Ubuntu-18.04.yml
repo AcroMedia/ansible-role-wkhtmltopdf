@@ -1,0 +1,7 @@
+---
+# See https://wkhtmltopdf.org/downloads.html for checksums.
+package_source: 'https://downloads.wkhtmltopdf.org/0.12/0.12.5/wkhtmltox_0.12.5-1.bionic_amd64.deb'
+download_dest: "{{ lookup('env','HOME') }}/wkhtmltox_0.12.5-1.bionic_amd64.deb"
+package_checksum: sha256:db48fa1a043309c4bfe8c8e0e38dc06c183f821599dd88d4e3cea47c5a5d4cd3
+
+xfonts_package_name: xfonts-75dpi

@@ -4,7 +4,7 @@ Install WKHTMLTOPDF (and its dependencies).
 
 ## Requirements
 
-* Ubuntu 14.04 or Red Hat / CentOS 6
+* Ubuntu 14.04, 18.04, or Red Hat / CentOS 6
 
 ## Role Variables
 
