@@ -7,6 +7,7 @@
       - pyOpenSSL
       - python-pyasn1
       - python-setuptools
+      - python-urllib3
     state: present
     update_cache: true
 
