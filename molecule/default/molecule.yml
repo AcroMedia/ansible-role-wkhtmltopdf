@@ -1,0 +1,30 @@
+# molecule/default/molecule.yml
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint:
+  name: yamllint
+  options:
+    config-data:
+      ignore: venv
+platforms:
+  - name: instance
+    image: "superelectron/docker-ubuntu-ansible-php:${MOLECULE_DISTRO:-ubuntu1804}"
+    command: ${MOLECULE_DOCKER_COMMAND:-""}
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
+    instance_raw_config_args:
+      - "vm.network 'forwarded_port', guest: 80, host: 8088"
+provisioner:
+  name: ansible
+  log: true
+  lint:
+    name: ansible-lint
+verifier:
+  name: testinfra
+  lint:
+    name: flake8

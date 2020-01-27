@@ -1,0 +1,4 @@
+# https://github.com/ansible/ansible-lint/issues/457
+skip_list:
+  - '602'
+  - '305' #ignore 'shell' error in handles/main.yml

@@ -1,0 +1,24 @@
+.env
+
+# Python virtual environment
+/venv/
+/env/
+
+# Python distribution packaging
+/dist/
+*.egg*
+
+# Python caching and test cache
+*/__pycache__
+*.pyc
+.pytest_cache
+/.tox
+.cache
+
+# Molecule test logs
+molecule/default/tests/__pycache__/
+molecule/default/pytestdebug.log
+
+# IDE configurations
+.vscode
+.idea
