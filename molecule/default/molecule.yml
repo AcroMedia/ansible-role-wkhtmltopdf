@@ -11,7 +11,7 @@ lint:
       ignore: venv
 platforms:
   - name: instance
-    image: "superelectron/docker-ubuntu-ansible-php:${MOLECULE_DISTRO:-ubuntu1804}"
+    image: "geerlingguy/docker-${MOLECULE_DISTRO:-ubuntu1604}-ansible:latest"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     volumes:
       - /sys/fs/cgroup:/sys/fs/cgroup:ro

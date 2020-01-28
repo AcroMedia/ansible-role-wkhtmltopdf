@@ -1,0 +1,9 @@
+---
+# See https://wkhtmltopdf.org/downloads.html for checksums.
+package_source: "https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.xenial_amd64.deb"
+home_directory_test: "{{ TEST_HOME }}"
+home_directory_server: "{{ lookup('env','HOME') }}"
+download_dest: "{{ (home_directory_test | length > 0) | ternary(home_directory_test, home_directory_server) }}/wkhtmltox_0.12.5-1.xenial_amd64.deb"
+package_checksum: sha256:df203cee4dc9b3efb8d0cd6fc25fa819883224f50c75b76bd9c856903711dc14
+
+xfonts_package_name: xfonts-75dpi

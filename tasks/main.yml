@@ -1,13 +1,21 @@
 ---
+# Example that prints two lines of messages, but only if there is an environment value set
+- debug:
+    msg:
+    - "ansible_os_family:                   {{ ansible_os_family }}"
+    - "ansible_distribution:                {{ ansible_distribution }}"
+    - "ansible_distribution_version:        {{ ansible_distribution_version }}"
+    - "ansible_distribution_major_version:  {{ ansible_distribution_major_version }}"
+    - "logic test:  {{ ansible_distribution_major_version == '9'  }}"
+
 - name: Include OS-family-specific variables
-  include_vars: "{{ ansible_os_family }}.yml"
+  include_vars: "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
 
 - name: Include distribution-specific variables (if they exist)
   include_vars: "{{ version_specific_vars_file }}"
   with_first_found:
     - files:
-        - "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
-        - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+        - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
       skip: true
   loop_control:
     loop_var: version_specific_vars_file
@@ -21,3 +29,45 @@
       skip: true
   loop_control:
     loop_var: version_specific_task_file
+
+- name: Install xfonts (a prerequisite of wkhtmltopdf)
+  package:
+    name: "{{ xfonts_package_name }}"
+    state: present
+    update_cache: true
+
+- name: Download wkhtmltopdf
+  get_url:
+   # These come from vars/{version}.yml
+    url: "{{ package_source }}"
+    dest: "{{ download_dest }}"
+    checksum: "{{ package_checksum }}"
+
+- name: Download wkhtmltopdf (Debian 9 & 10)
+  get_url:
+    url: "{{ package_source1 }}"
+    dest: "{{ download_dest1 }}"
+  when: ansible_distribution_major_version != '8'
+    and ansible_distribution == 'Debian'
+
+- name: Install wkhtmltopdf (Debian 9 & 10)
+  apt:
+    deb: "{{ download_dest1 }}"
+    state: present
+    update_cache: true
+  when: ansible_distribution_major_version != '8'
+    and ansible_distribution == 'Debian'
+
+- name: Install wkhtmltopdf (CentOS-ish)
+  yum:
+    name: "{{ download_dest }}"
+    state: present
+    update_cache: true
+  when: ansible_distribution == 'CentOS'
+
+- name: Install wkhtmltopdf (Ubuntu-ish)
+  apt:
+    deb: "{{ download_dest }}"
+    state: present
+    update_cache: true
+  when: ansible_distribution == 'Ubuntu'

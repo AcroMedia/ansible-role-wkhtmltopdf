@@ -3,3 +3,6 @@
   hosts: all
   roles:
     - role: ansible-role-wkhtmltopdf
+  vars:
+    homeOverride: "{{ lookup('env', 'TEST_HOME') }}"
+    TEST_HOME: "{{ (homeOverride | length > 0) | ternary(homeOverride, '/root') }}"

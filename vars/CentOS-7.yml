@@ -1,0 +1,9 @@
+---
+# See https://wkhtmltopdf.org/downloads.html for checksums.
+package_source: 'https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox-0.12.5-1.centos7.x86_64.rpm'
+home_directory_test: "{{ TEST_HOME }}"
+home_directory_server: "{{ lookup('env','HOME') }}"
+download_dest: "{{ (home_directory_test | length > 0) | ternary(home_directory_test, home_directory_server) }}/wkhtmltox-0.12.5-1.centos7.x86_64.rpm"
+package_checksum: sha256:ac4f909b836fa1fc0188d19a1ab844910f91612e9ccefcb5298aa955a058ffe4
+
+xfonts_package_name: xorg-x11-fonts-75dpi

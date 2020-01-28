@@ -1,4 +1,4 @@
 # https://github.com/ansible/ansible-lint/issues/457
 skip_list:
   - '602'
-  - '305' #ignore 'shell' error in handles/main.yml
+  - '403' # ignore: [403] Package installs should not use latest
