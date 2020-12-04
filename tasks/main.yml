@@ -3,8 +3,8 @@
   include_tasks: "{{ version_specific_task_file }}"
   with_first_found:
     - files:
-        - "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
-        - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
+        - "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"  #  To hit exact distro + version:  E.g. Ubuntu-14.04.yml
+        - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"   # To hit general family + major version: E.g: RedHat-6.yml will play for both Centos 6 and Red Hat 6
       skip: true
   loop_control:
     loop_var: version_specific_task_file
