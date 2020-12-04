@@ -1,17 +1,4 @@
 ---
-- name: Include OS-family-specific variables
-  include_vars: "{{ ansible_os_family }}.yml"
-
-- name: Include distribution-specific variables (if they exist)
-  include_vars: "{{ version_specific_vars_file }}"
-  with_first_found:
-    - files:
-        - "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
-        - "{{ ansible_os_family }}-{{ ansible_distribution_major_version }}.yml"
-      skip: true
-  loop_control:
-    loop_var: version_specific_vars_file
-
 - name: Include distribution-specific tasks (if they exist)
   include_tasks: "{{ version_specific_task_file }}"
   with_first_found:
