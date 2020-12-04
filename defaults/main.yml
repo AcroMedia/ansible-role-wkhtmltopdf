@@ -1,0 +1,7 @@
+---
+
+ansible_role_wkhtmltopdf_os:
+  Debian: Ubuntu.yml
+  RedHat: RedHat.yml
+
+ansible_role_wkhtmltopdf: "{{ ansible_role_wkhtmltopdf_os[ansible_os_family] }}"
