@@ -8,7 +8,7 @@ Install WKHTMLTOPDF (and its dependencies).
 
 ## Role Variables
 
-None: See 'vars'
+See defaults.yml
 
 ## Dependencies
 
