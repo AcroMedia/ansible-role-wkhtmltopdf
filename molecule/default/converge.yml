@@ -2,6 +2,7 @@
 - name: Converge
   hosts: all
   become: true
+  gather_facts: true
   vars:
     - package_source: 'https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.bionic_amd64.deb'
     - download_dest: "{{ lookup('env','HOME') }}/wkhtmltox_0.12.6-1.bionic_amd64.deb"
