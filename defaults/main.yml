@@ -9,8 +9,8 @@ wkhtmltox_package_source_by_family:
   RedHat: 'https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox-0.12.6-1.centos8.x86_64.rpm'
 
 wkhtmltox_download_dest_by_family:
-  Debian: "{{ lookup('env','HOME') }}/wkhtmltox_0.12.6-1.bionic_amd64.deb"
-  RedHat: "{{ lookup('env','HOME') }}/wkhtmltox-0.12.6-1.centos8.x86_64.rpm"
+  Debian: "/root/wkhtmltox_0.12.6-1.bionic_amd64.deb"
+  RedHat: "/root/wkhtmltox-0.12.6-1.centos8.x86_64.rpm"
 
 wkhtmltox_package_checksum_by_family:
   Debian: sha256:503a8a97fcf8fd397ed52c1789471e0f2513f5752f3e214d3a5eda30caa0354b
