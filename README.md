@@ -6,7 +6,7 @@ Install WKHTMLTOPDF (and its dependencies).
 
 ## Requirements
 
-* Ubuntu 14.04, 18.04, or Red Hat / CentOS 6
+* Ubuntu 18.04  , or Red Hat / CentOS 8
 * Your playbook must gather facts.
 
 ## Role Variables
