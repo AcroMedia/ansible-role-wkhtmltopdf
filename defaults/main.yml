@@ -1,7 +1,7 @@
 ---
 
-ansible_role_wkhtmltopdf_os:
-  Debian: Ubuntu.yml
-  RedHat: RedHat.yml
+xfonts_package_name_by_family:
+  Debian: xfonts-75dpi
+  RedHat: xorg-x11-fonts-75dpi
 
-ansible_role_wkhtmltopdf: "{{ ansible_role_wkhtmltopdf_os[ansible_os_family] }}"
+xfonts_package_name: "{{ xfonts_package_name_by_family[ansible_os_family] }}"

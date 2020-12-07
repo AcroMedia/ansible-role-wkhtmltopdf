@@ -2,6 +2,7 @@
 - name: Converge
   hosts: all
   become: true
+  gather_facts: true
   vars:
     - package_source: 'https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-rc/wkhtmltox-0.12.6-0.20200605.30.rc.faa06fa.centos8.x86_64.rpm'
     - download_dest: "{{ lookup('env','HOME') }}/wkhtmltox-0.12.6-0.20200605.30.rc.faa06fa.centos8.x86_64.rpm"

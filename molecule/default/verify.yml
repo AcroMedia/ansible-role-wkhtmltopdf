@@ -1,0 +1,24 @@
+---
+- name: Verify
+  hosts: all
+  become: true
+  gather_facts: true
+  tasks:
+    - name: Verify wkhtmltopdf runs
+      command: /usr/local/bin/wkhtmltopdf "https://www.google.com/" /root/wkhtmltopdf-test.pdf
+
+    - name: Gather facts about the test file createdy by wkhtmltopdf
+      stat:
+        path: /root/wkhtmltopdf-test.pdf
+      register: test_file_results
+
+    - name: Debug test_file_results
+      debug:
+        var: test_file_results
+
+    - name: Ensure the test file looks as expected
+      assert:
+        that:
+          - test_file_results.stat.mimetype == "application/pdf"
+          - (test_file_results.stat.size | int) > 20000
+          - (test_file_results.stat.size | int) < 200000
