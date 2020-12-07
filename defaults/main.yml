@@ -17,6 +17,6 @@ wkhtmltox_package_checksum_by_family:
   RedHat: sha256:5cc267d54fe3f144729f31432a165e028b689583c53cfee0a01d52644ab280d9
 
 xfonts_package_name: "{{ xfonts_package_name_by_family[ansible_os_family] }}"
-package_source_: "{{ wkhtmltox_package_source_by_family[ansible_os_family] }}"
+package_source: "{{ wkhtmltox_package_source_by_family[ansible_os_family] }}"
 download_dest: "{{ wkhtmltox_download_dest_by_family[ansible_os_family] }}"
 package_checksum: "{{ wkhtmltox_package_checksum_by_family[ansible_os_family] }}"
