@@ -13,3 +13,9 @@
       apt:
         update_cache: yes
       when: ansible_os_family == 'Debian'
+
+    - name: Install file package
+      package:
+        name:
+            - file
+        state: present
