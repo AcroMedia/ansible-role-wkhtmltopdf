@@ -1,0 +1,21 @@
+---
+- name: Prepare
+  hosts: all
+  become: true
+  gather_facts: true
+  tasks:
+    - name: Update yum cache
+      yum:
+        update_cache: yes
+      when: ansible_os_family == 'RedHat'
+
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+      when: ansible_os_family == 'Debian'
+
+    - name: Install file package
+      package:
+        name:
+            - file
+        state: present

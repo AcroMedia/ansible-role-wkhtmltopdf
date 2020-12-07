@@ -1,0 +1,44 @@
+---
+on:
+  # Trigger the workflow on push or pull request,
+  # but only for the main branch
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          path: "${{ github.repository }}"
+      - name: molecule
+        uses: robertdebock/molecule-action@2.6.3
+        with:
+          command: lint
+  test:
+    needs:
+      - lint
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        image:
+          - geerlingguy/docker-ubuntu1804-ansible:latest
+          - geerlingguy/docker-ubuntu1404-ansible:latest
+          - geerlingguy/docker-centos6-ansible:latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          path: "${{ github.repository }}"
+      - name: molecule
+        uses: robertdebock/molecule-action@2.6.3
+        with:
+          image: "${{ matrix.image }}"
+          options: parallel
+        env:
+          MOLECULE_DOCKER_IMAGE: "${{ matrix.image }}"

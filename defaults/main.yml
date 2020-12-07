@@ -1,7 +1,22 @@
 ---
 
-ansible_role_wkhtmltopdf_os:
-  Debian: Ubuntu.yml
-  RedHat: RedHat.yml
+xfonts_package_name_by_family:
+  Debian: xfonts-75dpi
+  RedHat: xorg-x11-fonts-75dpi
 
-ansible_role_wkhtmltopdf: "{{ ansible_role_wkhtmltopdf_os[ansible_os_family] }}"
+wkhtmltox_package_source_by_family:
+  Debian: 'https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.bionic_amd64.deb'
+  RedHat: 'https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox-0.12.6-1.centos8.x86_64.rpm'
+
+wkhtmltox_download_dest_by_family:
+  Debian: "/root/wkhtmltox_0.12.6-1.bionic_amd64.deb"
+  RedHat: "/root/wkhtmltox-0.12.6-1.centos8.x86_64.rpm"
+
+wkhtmltox_package_checksum_by_family:
+  Debian: sha256:503a8a97fcf8fd397ed52c1789471e0f2513f5752f3e214d3a5eda30caa0354b
+  RedHat: sha256:5cc267d54fe3f144729f31432a165e028b689583c53cfee0a01d52644ab280d9
+
+xfonts_package_name: "{{ xfonts_package_name_by_family[ansible_os_family] }}"
+package_source: "{{ wkhtmltox_package_source_by_family[ansible_os_family] }}"
+download_dest: "{{ wkhtmltox_download_dest_by_family[ansible_os_family] }}"
+package_checksum: "{{ wkhtmltox_package_checksum_by_family[ansible_os_family] }}"
