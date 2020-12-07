@@ -1,5 +1,7 @@
 # Ansible role: WKHTMLTOPDF
 
+![.github/workflows/molecule.yml](https://github.com/AcroMedia/ansible-role-wkhtmltopdf/workflows/.github/workflows/molecule.yml/badge.svg)
+
 Install WKHTMLTOPDF (and its dependencies).
 
 ## Requirements
