@@ -1,16 +1,22 @@
 ---
 
+_arch_string_map:
+  'x86_64': 'amd64'
+  'aarm64': 'arm64'
+
+_arch_string: "{{ _arch_string_map[ansible_architecture] }}"
+
 xfonts_package_name_by_family:
   Debian: xfonts-75dpi
   RedHat: xorg-x11-fonts-75dpi
 
 wkhtmltox_package_source_by_family:
-  Debian: 'https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.bionic_amd64.deb'
-  RedHat: 'https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox-0.12.6-1.centos8.x86_64.rpm'
+  Debian: 'https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.bionic_{{ _arch_string }}.deb'
+  RedHat: 'https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox-0.12.6-1.centos8.{{ _arch_string }}.rpm'
 
 wkhtmltox_download_dest_by_family:
-  Debian: "/root/wkhtmltox_0.12.6-1.bionic_amd64.deb"
-  RedHat: "/root/wkhtmltox-0.12.6-1.centos8.x86_64.rpm"
+  Debian: "/root/wkhtmltox_0.12.6-1.bionic_{{ _arch_string }}.deb"
+  RedHat: "/root/wkhtmltox-0.12.6-1.centos8.{{ _arch_string }}.rpm"
 
 wkhtmltox_package_checksum_by_family:
   Debian: sha256:503a8a97fcf8fd397ed52c1789471e0f2513f5752f3e214d3a5eda30caa0354b
