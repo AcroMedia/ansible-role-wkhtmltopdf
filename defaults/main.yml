@@ -26,3 +26,27 @@ xfonts_package_name: "{{ xfonts_package_name_by_family[ansible_os_family] }}"
 package_source: "{{ wkhtmltox_package_source_by_family[ansible_os_family] }}"
 download_dest: "{{ wkhtmltox_download_dest_by_family[ansible_os_family] }}"
 package_checksum: "{{ wkhtmltox_package_checksum_by_family[ansible_os_family] }}"
+
+wkhtmltopdf_install_method_by_dist_version:
+  Ubuntu-22.04: apt
+  Ubuntu-20.04: apt # The deb is hard to get working on 20.04. Apt version is recommended, even though it's not the latest.
+  Ubuntu-18.04: deb # 18.04 **can** use apt, but the apt version is a lot older than the deb version , which still works great on 18.04
+  Ubuntu-16.04: deb
+  Ubuntu-14.04: deb
+
+wkhtmltopdf_install_method: "{{ wkhtmltopdf_install_method_by_dist_version[ansible_distribution + '-' + ansible_distribution_version] | default('undefined') }}"
+
+wkhtmltopdf_apt_packages_by_dist_version:
+  Ubuntu-22.04:
+    - wkhtmltopdf
+    - pdftk
+  Ubuntu-20.04:
+    - wkhtmltopdf
+    - pdftk
+  Ubuntu-18.04:
+    - wkhtmltopdf
+    - pdftk
+  Ubuntu-16.04: [] # No apt packages exist for 16.04.
+  Ubuntu-14.04: [] # No apt packages exist for 14.04.
+
+wkhtmltopdf_apt_packages: "{{ wkhtmltopdf_apt_packages_by_dist_version[ansible_distribution + '-' + ansible_distribution_version] | default([]) }}"

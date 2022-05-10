@@ -1,4 +1,17 @@
 ---
+
+- name: debug vars
+  debug:
+    var: "{{ item }}"
+  with_items:
+    - wkhtmltopdf_install_method
+    - wkhtmltopdf_apt_packages
+    - ansible_distribution
+    - ansible_os_family
+    - ansible_distribution_version
+    - ansible_distribution_major_version
+  verbosity: 1
+
 - name: Include distribution-specific tasks (if they exist)
   include_tasks: "{{ version_specific_task_file }}"
   with_first_found:
@@ -15,21 +28,41 @@
     state: present
     update_cache: true
 
-- name: Download wkhtmltopdf
+- name: Download wkhtmltopdf deb file
   get_url:
    # These come from vars/{version}.yml
     url: "{{ package_source }}"
     dest: "{{ download_dest }}"
     checksum: "{{ package_checksum }}"
+  when: wkhtmltopdf_install_method == 'deb'
 
-- name: Install wkhtmltopdf (Debian-ish)
+- name: Install wkhtmltopdf from deb file
   apt:
     deb: "{{ download_dest }}"
     state: present
     update_cache: true
   when: ansible_os_family == 'Debian'
+    and wkhtmltopdf_install_method == 'deb'
 
-- name: Install wkhtmltopdf (Red-hat-ish)
+- name: Install wkhtmltopdf from apt
+  apt:
+    name: "{{ wkhtmltopdf_apt_packages }}"
+    state: present
+    update_cache: true
+  when: ansible_os_family == 'Debian'
+    and wkhtmltopdf_install_method == 'apt'
+
+- name: Create a symlink for compatibility with older versions
+  file:
+    state: link
+    src: /usr/bin/wkhtmltopdf
+    dest: /usr/local/bin/wkhtmltopdf
+  when: ansible_os_family == 'Debian'
+    and wkhtmltopdf_install_method == 'apt'
+  tags:
+    - wkhtmltodpf-symlink
+
+- name: Install wkhtmltopdf from rpm file
   yum:
     name: "{{ download_dest }}"
     state: present
