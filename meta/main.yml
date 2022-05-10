@@ -1,6 +1,8 @@
 galaxy_info:
   author: Dale Anderson
   description: Install wkhtmltopdf and its dependencies
+  role_name: wkhtmltopdf
+  namespace: acromedia
   company: Acro Media Inc.
   license: GPLv3
   min_ansible_version: 2.4
